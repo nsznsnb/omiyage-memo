@@ -1,4 +1,20 @@
 import { useState, useEffect } from 'react'
+import { Button } from '@/components/ui/button'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog'
+import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { FormField } from './FormField'
 import { ErrorMessage } from './ErrorMessage'
 import * as groupsApi from '../api/groups'
@@ -42,14 +58,11 @@ export function GiftListFormModal({ initialName = '', onSubmit, onClose }: GiftL
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
-    >
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-xl p-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-4">
-          {isEdit ? 'リスト名を変更' : 'リストを作成'}
-        </h2>
+    <Dialog open onOpenChange={(open) => { if (!open) onClose() }}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{isEdit ? 'リスト名を変更' : 'リストを作成'}</DialogTitle>
+        </DialogHeader>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <ErrorMessage message={error} />
@@ -63,44 +76,35 @@ export function GiftListFormModal({ initialName = '', onSubmit, onClose }: GiftL
           />
 
           {!isEdit && groups.length > 0 && (
-            <div className="flex flex-col gap-1">
-              <label htmlFor="group-select" className="text-sm font-medium text-gray-700">
-                グループ（任意）
-              </label>
-              <select
-                id="group-select"
-                value={groupId}
-                onChange={(e) => setGroupId(e.target.value)}
-                className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm
-                  outline-none focus:ring-2 focus:ring-indigo-400"
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="group-select">グループ（任意）</Label>
+              <Select
+                value={groupId || 'personal'}
+                onValueChange={(v) => setGroupId(v === 'personal' ? '' : v)}
               >
-                <option value="">個人リスト</option>
-                {groups.map((g) => (
-                  <option key={g.id} value={g.id}>{g.name}</option>
-                ))}
-              </select>
+                <SelectTrigger id="group-select" className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="personal">個人リスト</SelectItem>
+                  {groups.map((g) => (
+                    <SelectItem key={g.id} value={g.id}>{g.name}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           )}
 
-          <div className="flex gap-2 justify-end">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded-lg px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 transition-colors"
-            >
+          <DialogFooter>
+            <Button type="button" variant="outline" onClick={onClose}>
               キャンセル
-            </button>
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white
-                hover:bg-indigo-700 disabled:opacity-50 transition-colors"
-            >
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? '処理中...' : isEdit ? '変更する' : '作成する'}
-            </button>
-          </div>
+            </Button>
+          </DialogFooter>
         </form>
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }

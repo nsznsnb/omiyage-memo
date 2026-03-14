@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { Layout } from '../components/Layout'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { GiftListFormModal } from '../components/GiftListFormModal'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardHeader, CardTitle, CardDescription, CardAction } from '@/components/ui/card'
 import * as giftListsApi from '../api/giftLists'
 import type { GiftList } from '../types'
 
@@ -36,47 +39,37 @@ export function GiftListPage() {
   return (
     <Layout>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-gray-900">プレゼントリスト</h1>
-        <button
-          onClick={() => setShowModal(true)}
-          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white
-            hover:bg-indigo-700 transition-colors"
-        >
-          + リストを作成
-        </button>
+        <h1 className="text-xl font-bold">プレゼントリスト</h1>
+        <Button onClick={() => setShowModal(true)}>+ リストを作成</Button>
       </div>
 
       <ErrorMessage message={error} />
 
       {isLoading ? (
-        <p className="text-gray-400 text-center py-12">読み込み中...</p>
+        <p className="text-muted-foreground text-center py-12">読み込み中...</p>
       ) : lists.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-gray-400 mb-4">まだリストがありません</p>
-          <button
-            onClick={() => setShowModal(true)}
-            className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
-          >
+          <p className="text-muted-foreground mb-4">まだリストがありません</p>
+          <Button variant="link" onClick={() => setShowModal(true)}>
             最初のリストを作成する
-          </button>
+          </Button>
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
           {lists.map((list) => (
             <li key={list.id}>
-              <Link
-                to={`/gift-lists/${list.id}`}
-                className="flex items-center justify-between rounded-xl bg-white border
-                  border-gray-200 px-5 py-4 hover:border-indigo-300 hover:shadow-sm transition"
-              >
-                <div>
-                  <p className="font-semibold text-gray-900">{list.name}</p>
-                  <p className="text-sm text-gray-400 mt-0.5">
-                    {list.groupId ? 'グループリスト' : '個人リスト'} ·{' '}
-                    {list.items.length}件
-                  </p>
-                </div>
-                <span className="text-gray-300 text-lg">›</span>
+              <Link to={`/gift-lists/${list.id}`}>
+                <Card className="hover:ring-primary/30 transition-shadow cursor-pointer">
+                  <CardHeader>
+                    <CardTitle>{list.name}</CardTitle>
+                    <CardDescription>{list.items.length}件のアイテム</CardDescription>
+                    <CardAction>
+                      <Badge variant={list.groupId ? 'secondary' : 'outline'}>
+                        {list.groupId ? 'グループリスト' : '個人リスト'}
+                      </Badge>
+                    </CardAction>
+                  </CardHeader>
+                </Card>
               </Link>
             </li>
           ))}

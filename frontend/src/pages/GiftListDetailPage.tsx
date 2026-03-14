@@ -4,6 +4,9 @@ import { Layout } from '../components/Layout'
 import { ErrorMessage } from '../components/ErrorMessage'
 import { GiftListFormModal } from '../components/GiftListFormModal'
 import { GiftItemFormModal } from '../components/GiftItemFormModal'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
 import * as giftListsApi from '../api/giftLists'
 import type { GiftList, GiftItem } from '../types'
 import type { GiftItemInput } from '../api/giftLists'
@@ -82,7 +85,7 @@ export function GiftListDetailPage() {
   if (isLoading) {
     return (
       <Layout>
-        <p className="text-gray-400 text-center py-12">読み込み中...</p>
+        <p className="text-muted-foreground text-center py-12">読み込み中...</p>
       </Layout>
     )
   }
@@ -100,32 +103,28 @@ export function GiftListDetailPage() {
       {/* ヘッダー */}
       <div className="mb-6 flex items-start justify-between">
         <div>
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => navigate('/gift-lists')}
-            className="text-sm text-gray-400 hover:text-gray-600 mb-1"
+            className="mb-1 -ml-2 text-muted-foreground"
           >
             ← リスト一覧
-          </button>
-          <h1 className="text-xl font-bold text-gray-900">{list.name}</h1>
-          <p className="text-sm text-gray-400 mt-0.5">
-            {list.groupId ? 'グループリスト' : '個人リスト'}
-          </p>
+          </Button>
+          <h1 className="text-xl font-bold">{list.name}</h1>
+          <div className="mt-1">
+            <Badge variant={list.groupId ? 'secondary' : 'outline'}>
+              {list.groupId ? 'グループリスト' : '個人リスト'}
+            </Badge>
+          </div>
         </div>
         <div className="flex gap-2">
-          <button
-            onClick={() => setShowEditListModal(true)}
-            className="rounded-lg border border-gray-200 px-3 py-1.5 text-sm text-gray-600
-              hover:bg-gray-50 transition-colors"
-          >
+          <Button variant="outline" size="sm" onClick={() => setShowEditListModal(true)}>
             編集
-          </button>
-          <button
-            onClick={handleDeleteList}
-            className="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-500
-              hover:bg-red-50 transition-colors"
-          >
+          </Button>
+          <Button variant="destructive" size="sm" onClick={handleDeleteList}>
             削除
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -133,72 +132,67 @@ export function GiftListDetailPage() {
 
       {/* アイテム追加ボタン */}
       <div className="flex justify-end mb-4">
-        <button
-          onClick={() => setShowAddItemModal(true)}
-          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white
-            hover:bg-indigo-700 transition-colors"
-        >
-          + アイテムを追加
-        </button>
+        <Button onClick={() => setShowAddItemModal(true)}>+ アイテムを追加</Button>
       </div>
 
       {/* アイテム一覧 */}
       {list.items.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-          <p className="text-gray-400 mb-4">まだアイテムがありません</p>
-          <button
-            onClick={() => setShowAddItemModal(true)}
-            className="text-sm text-indigo-600 hover:text-indigo-700 font-medium"
-          >
+        <div className="text-center py-12 border rounded-xl">
+          <p className="text-muted-foreground mb-4">まだアイテムがありません</p>
+          <Button variant="link" onClick={() => setShowAddItemModal(true)}>
             最初のアイテムを追加する
-          </button>
+          </Button>
         </div>
       ) : (
         <ul className="flex flex-col gap-3">
           {list.items.map((item) => (
-            <li
-              key={item.id}
-              className="bg-white rounded-xl border border-gray-200 px-5 py-4"
-            >
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900">{item.name}</p>
-                  {item.price != null && (
-                    <p className="text-sm text-indigo-600 mt-0.5">
-                      ¥{item.price.toLocaleString()}
-                    </p>
-                  )}
-                  {item.memo && (
-                    <p className="text-sm text-gray-500 mt-1">{item.memo}</p>
-                  )}
-                  {item.url && (
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-indigo-400 hover:text-indigo-600 mt-1 block truncate"
-                    >
-                      {item.url}
-                    </a>
-                  )}
-                </div>
-                <div className="flex gap-2 shrink-0">
-                  <button
-                    onClick={() => setEditingItem(item)}
-                    className="text-xs text-gray-400 hover:text-gray-600 transition-colors"
-                    aria-label={`${item.name}を編集`}
-                  >
-                    編集
-                  </button>
-                  <button
-                    onClick={() => handleDeleteItem(item)}
-                    className="text-xs text-red-400 hover:text-red-600 transition-colors"
-                    aria-label={`${item.name}を削除`}
-                  >
-                    削除
-                  </button>
-                </div>
-              </div>
+            <li key={item.id}>
+              <Card>
+                <CardContent className="pt-4">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold">{item.name}</p>
+                      {item.price != null && (
+                        <p className="text-sm text-primary mt-0.5">
+                          ¥{item.price.toLocaleString()}
+                        </p>
+                      )}
+                      {item.memo && (
+                        <p className="text-sm text-muted-foreground mt-1">{item.memo}</p>
+                      )}
+                      {item.url && (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-primary/70 hover:text-primary mt-1 block truncate"
+                        >
+                          {item.url}
+                        </a>
+                      )}
+                    </div>
+                    <div className="flex gap-1 shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setEditingItem(item)}
+                        aria-label={`${item.name}を編集`}
+                      >
+                        編集
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteItem(item)}
+                        aria-label={`${item.name}を削除`}
+                        className="text-destructive hover:text-destructive"
+                      >
+                        削除
+                      </Button>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             </li>
           ))}
         </ul>

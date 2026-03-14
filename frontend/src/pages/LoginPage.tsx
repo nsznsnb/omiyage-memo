@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { FormField } from '../components/FormField'
 import { ErrorMessage } from '../components/ErrorMessage'
+import { Button } from '@/components/ui/button'
 
 export function LoginPage() {
   const { login } = useAuth()
@@ -28,10 +29,10 @@ export function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">ログイン</h1>
-        <p className="text-sm text-gray-500 mb-6">おみやげメモにログイン</p>
+    <div className="min-h-screen flex items-center justify-center bg-muted/40 px-4">
+      <div className="w-full max-w-sm bg-background rounded-2xl shadow-sm border p-8">
+        <h1 className="text-2xl font-bold mb-1">ログイン</h1>
+        <p className="text-sm text-muted-foreground mb-6">おみやげメモにログイン</p>
 
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
           <ErrorMessage message={error} />
@@ -55,20 +56,14 @@ export function LoginPage() {
             autoComplete="current-password"
           />
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="mt-2 w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-semibold
-              text-white hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed
-              transition-colors"
-          >
+          <Button type="submit" disabled={isSubmitting} className="mt-2 w-full" size="lg">
             {isSubmitting ? 'ログイン中...' : 'ログイン'}
-          </button>
+          </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-sm text-muted-foreground">
           アカウントをお持ちでない方は{' '}
-          <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-700">
+          <Link to="/register" className="font-medium text-primary hover:text-primary/80">
             新規登録
           </Link>
         </p>

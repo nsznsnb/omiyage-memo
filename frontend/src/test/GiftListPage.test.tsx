@@ -49,8 +49,10 @@ describe('GiftListPage', () => {
       expect(screen.getByText('クリスマスリスト')).toBeInTheDocument()
     })
     expect(screen.getByText('家族へのプレゼント')).toBeInTheDocument()
-    expect(screen.getByText('個人リスト · 0件')).toBeInTheDocument()
-    expect(screen.getByText('グループリスト · 1件')).toBeInTheDocument()
+    expect(screen.getByText('個人リスト')).toBeInTheDocument()
+    expect(screen.getByText('グループリスト')).toBeInTheDocument()
+    expect(screen.getByText('0件のアイテム')).toBeInTheDocument()
+    expect(screen.getByText('1件のアイテム')).toBeInTheDocument()
   })
 
   it('リストが0件のときは空のメッセージが表示される', async () => {
