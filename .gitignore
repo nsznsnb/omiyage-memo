@@ -34,4 +34,4 @@ Thumbs.db
 coverage/
 
 # Prisma
-backend/prisma/migrations/*.sql
+backend/node_modules/.prisma/

@@ -11,14 +11,14 @@ datasource db {
 }
 
 model User {
-  id           String        @id @default(cuid())
-  email        String        @unique
+  id           String      @id @default(cuid())
+  email        String      @unique
   passwordHash String
   name         String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
   groupMembers GroupMember[]
-  giftItems    GiftItem[]
+  giftLists    GiftList[]
 
   @@map("users")
 }
@@ -29,7 +29,7 @@ model Group {
   createdAt DateTime      @default(now())
   updatedAt DateTime      @updatedAt
   members   GroupMember[]
-  giftItems GiftItem[]
+  giftLists GiftList[]
 
   @@map("groups")
 }
@@ -47,18 +47,32 @@ model GroupMember {
   @@map("group_members")
 }
 
-model GiftItem {
-  id        String   @id @default(cuid())
+// グループまたはユーザに紐づくプレゼントリスト
+model GiftList {
+  id        String     @id @default(cuid())
   name      String
-  price     Int?
-  memo      String?
-  url       String?
   groupId   String?
   userId    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  group     Group?   @relation(fields: [groupId], references: [id], onDelete: Cascade)
-  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  group     Group?     @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  user      User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items     GiftItem[]
+
+  @@map("gift_lists")
+}
+
+// リスト内の個別プレゼントアイテム
+model GiftItem {
+  id         String   @id @default(cuid())
+  name       String
+  price      Int?
+  memo       String?
+  url        String?
+  giftListId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  giftList   GiftList @relation(fields: [giftListId], references: [id], onDelete: Cascade)
 
   @@map("gift_items")
 }
