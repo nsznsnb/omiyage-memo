@@ -27,6 +27,9 @@ export async function apiRequest<T>(
   const res = await fetch(`${BASE_URL}${path}`, { ...init, headers })
 
   if (!res.ok) {
+    if (res.status === 401 && !skipAuth) {
+      window.dispatchEvent(new Event('auth:unauthorized'))
+    }
     const body = await res.json().catch(() => ({ error: 'Unknown error' }))
     throw new Error((body as { error: string }).error ?? 'Request failed')
   }

@@ -62,6 +62,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
+  // 401エラー時に自動ログアウト
+  useEffect(() => {
+    function handleUnauthorized() {
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
+      localStorage.removeItem('user')
+      dispatch({ type: 'LOGOUT' })
+    }
+    window.addEventListener('auth:unauthorized', handleUnauthorized)
+    return () => window.removeEventListener('auth:unauthorized', handleUnauthorized)
+  }, [])
+
   const login = useCallback(async (email: string, password: string) => {
     const res = await authApi.login(email, password)
     localStorage.setItem('accessToken', res.accessToken)
