@@ -36,15 +36,15 @@
 
 ---
 
-## Phase 4: バックエンド - グループAPI
-- [ ] `GET    /api/v1/groups` - グループ一覧取得
-- [ ] `POST   /api/v1/groups` - グループ作成
-- [ ] `GET    /api/v1/groups/:id` - グループ詳細取得
-- [ ] `PUT    /api/v1/groups/:id` - グループ更新
-- [ ] `DELETE /api/v1/groups/:id` - グループ削除
-- [ ] `POST   /api/v1/groups/:id/members` - メンバー追加
-- [ ] `DELETE /api/v1/groups/:id/members/:userId` - メンバー削除
-- [ ] グループAPIのテスト作成
+## Phase 4: バックエンド - グループAPI ✅
+- [x] `GET    /api/v1/groups` - グループ一覧取得
+- [x] `POST   /api/v1/groups` - グループ作成
+- [x] `GET    /api/v1/groups/:id` - グループ詳細取得
+- [x] `PUT    /api/v1/groups/:id` - グループ更新
+- [x] `DELETE /api/v1/groups/:id` - グループ削除
+- [x] `POST   /api/v1/groups/:id/members` - メンバー追加
+- [x] `DELETE /api/v1/groups/:id/members/:memberId` - メンバー削除
+- [x] グループAPIのテスト作成（19件 全通過）
 
 ---
 
