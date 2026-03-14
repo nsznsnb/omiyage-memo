@@ -25,14 +25,14 @@
 
 ---
 
-## Phase 3: バックエンド - 認証API
-- [ ] JWT ユーティリティ実装（生成・検証）
-- [ ] 認証ミドルウェア実装
-- [ ] `POST /api/v1/auth/register` - ユーザ登録
-- [ ] `POST /api/v1/auth/login` - ログイン（JWT発行）
-- [ ] `POST /api/v1/auth/refresh` - トークンリフレッシュ
-- [ ] `POST /api/v1/auth/logout` - ログアウト
-- [ ] 認証APIのテスト作成
+## Phase 3: バックエンド - 認証API ✅
+- [x] JWT ユーティリティ実装（生成・検証）
+- [x] 認証ミドルウェア実装
+- [x] `POST /api/v1/auth/register` - ユーザ登録
+- [x] `POST /api/v1/auth/login` - ログイン（JWT発行）
+- [x] `POST /api/v1/auth/refresh` - トークンリフレッシュ
+- [x] `POST /api/v1/auth/logout` - ログアウト
+- [x] 認証APIのテスト作成（11件 全通過）
 
 ---
 
