@@ -48,13 +48,16 @@
 
 ---
 
-## Phase 5: バックエンド - プレゼントリストAPI
-- [ ] `GET    /api/v1/gifts` - アイテム一覧取得（グループ・ユーザフィルタ対応）
-- [ ] `POST   /api/v1/gifts` - アイテム登録
-- [ ] `GET    /api/v1/gifts/:id` - アイテム詳細取得
-- [ ] `PUT    /api/v1/gifts/:id` - アイテム更新
-- [ ] `DELETE /api/v1/gifts/:id` - アイテム削除
-- [ ] プレゼントリストAPIのテスト作成
+## Phase 5: バックエンド - プレゼントリストAPI ✅
+- [x] `GET    /api/v1/gift-lists` - リスト一覧（groupId or 個人+所属グループ）
+- [x] `POST   /api/v1/gift-lists` - リスト作成（個人 or グループ）
+- [x] `GET    /api/v1/gift-lists/:id` - リスト詳細（アイテム含む）
+- [x] `PUT    /api/v1/gift-lists/:id` - リスト名更新
+- [x] `DELETE /api/v1/gift-lists/:id` - リスト削除
+- [x] `POST   /api/v1/gift-lists/:listId/items` - アイテム追加
+- [x] `PUT    /api/v1/gift-lists/:listId/items/:itemId` - アイテム更新
+- [x] `DELETE /api/v1/gift-lists/:listId/items/:itemId` - アイテム削除
+- [x] プレゼントリストAPIのテスト作成（19件 全通過、累計49件）
 
 ---
 
