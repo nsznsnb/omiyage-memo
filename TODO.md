@@ -61,12 +61,13 @@
 
 ---
 
-## Phase 6: フロントエンド - 認証画面
-- [ ] APIクライアント基盤実装（fetch wrapper + JWTヘッダ付与）
-- [ ] ログイン画面
-- [ ] ユーザ登録画面
-- [ ] 認証状態管理（Context or Zustand）
-- [ ] ログイン・登録のテスト作成
+## Phase 6: フロントエンド - 認証画面 ✅
+- [x] APIクライアント基盤実装（fetch wrapper + JWTヘッダ付与）
+- [x] ログイン画面
+- [x] ユーザ登録画面
+- [x] 認証状態管理（AuthContext + useReducer）
+- [x] PrivateRoute（未認証ユーザーをリダイレクト）
+- [x] ログイン・登録のテスト作成（10件 全通過）
 
 ---
 
