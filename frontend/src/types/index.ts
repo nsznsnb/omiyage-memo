@@ -29,3 +29,24 @@ export interface Group {
   updatedAt: string
   members: GroupMember[]
 }
+
+export interface GiftItem {
+  id: string
+  name: string
+  price: number | null
+  memo: string | null
+  url: string | null
+  giftListId: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface GiftList {
+  id: string
+  name: string
+  groupId: string | null
+  userId: string | null
+  createdAt: string
+  updatedAt: string
+  items: GiftItem[]
+}
